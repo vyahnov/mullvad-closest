@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import platform
 from concurrent.futures import ThreadPoolExecutor, as_completed
