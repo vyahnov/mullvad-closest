@@ -21,6 +21,15 @@ def find(max_distance: float, server_type: Optional[str]) -> None:
     locations = utils.get_closest_locations(locations, max_distance=max_distance)
     locations = utils.ping_locations(locations)
 
+    import math
+    def latency_sort_key(loc):
+        # isinstance(False, (int, float)) == True, поэтому дополнительно проверяем на bool
+        if isinstance(loc.latency, (int, float)) and not isinstance(loc.latency, bool):
+            return loc.latency
+        return math.inf
+
+    locations.sort(key=latency_sort_key)
+
     table_header = ["Country", "City", "Type", "IP", "Hostname", "Distance", "Latency"]
     table_data = [
         [
